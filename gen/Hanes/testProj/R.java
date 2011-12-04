@@ -40,15 +40,10 @@ public final class R {
         public static final int options_menu=0x7f030004;
     }
     public static final class string {
-        public static final int Hi=0x7f040002;
-        public static final int about=0x7f040009;
-        public static final int app_name=0x7f040001;
-        public static final int credentials=0x7f040007;
-        public static final int delay=0x7f040006;
-        public static final int hello=0x7f040000;
-        public static final int help=0x7f040004;
-        public static final int new_game=0x7f040003;
-        public static final int options=0x7f040008;
-        public static final int title=0x7f040005;
+        public static final int app_name=0x7f040000;
+        public static final int credentials=0x7f040003;
+        public static final int delay=0x7f040002;
+        public static final int options=0x7f040004;
+        public static final int title=0x7f040001;
     }
 }

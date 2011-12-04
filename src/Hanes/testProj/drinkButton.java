@@ -91,7 +91,7 @@ public class drinkButton extends Button {
 		else
 		{
 			drinkMain.displayAlert("Successful Drop");	
-			drinkMain.createButtons();
+			drinkMain.updateButtons();
 		}
 	}
 }

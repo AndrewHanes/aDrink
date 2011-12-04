@@ -65,14 +65,14 @@ public class Drink_Main extends Activity {
 		{
 			if(!sp.contains("user"))
 			{
-				this.changeUsername();
+				this.changeUsernameAlert();
 			}
 			else
 			{
 				title.setText(R.string.title);
 				Log.d("Existing Username","Found existing username "+sp.getString("user", "....nevermind"));
 				if(!(drinkServ.command("GETBALANCE").get(0).indexOf("ERR") == -1))
-					login();
+					changePasswordAlert();
 			}
 			AlertDialog.Builder noSSLAlert = new AlertDialog.Builder(this);
 			noSSLAlert.setTitle("WARNING");
@@ -87,7 +87,7 @@ public class Drink_Main extends Activity {
 			linearLayout.addView(title);
 			linearLayout.setBackgroundColor(Color.GRAY);
 			linearLayout.setPadding(20, 10, 20, 10);
-			createButtons();
+			updateButtons();
 			Log.d("Done","Done w/ onCreate");
 			//linearLayout.setScaleY(1);
 		}
@@ -116,7 +116,7 @@ public class Drink_Main extends Activity {
 		Log.d("Goodbye Cruel World!!!!","Exiting");
 		drinkServ.close();
 	}
-	public void createButtons()
+	public void updateButtons()
 	/*
 	 * Creates buttons
 	 * Preconditions:  linearLayout has been initialized, drinkServ has been initialized
@@ -141,7 +141,7 @@ public class Drink_Main extends Activity {
 	 * Updates credits
 	 */
 	{
-		title.setText("Drink App"+"\n Current User: "+sp.getString("user", "null")+"\nCurrent Credits: "+curCreds);
+		updateTitle();
 
 	}
 	public boolean onCreateOptionsMenu(Menu menu)
@@ -168,11 +168,18 @@ public class Drink_Main extends Activity {
 				try
 				{
 					int n = Integer.parseInt(input.getText().toString());
-					edit.putInt("delay", n);
+					if( n < 1000 && n > 0)
+						edit.putInt("delay", n);
+					else
+					{
+						displayAlert("Invalid value\nRequires 0 < Delay < 1000");
+						edit.putInt("delay", 0);
+					}
 				}
 				catch(Exception e)
 				{
 					edit.putInt("delay",0);
+					displayAlert("Invalid value\n Requires 0 < n < 1000");
 				}
 				edit.commit();
 
@@ -193,7 +200,7 @@ public class Drink_Main extends Activity {
 			this.changeServerAlert();
 			return true;
 		case R.id.chusr:
-			this.changeUsername();
+			this.changeUsernameAlert();
 			return true;
 		case R.id.logout:
 			this.logout();
@@ -231,7 +238,7 @@ public class Drink_Main extends Activity {
 					newServ = "d";
 				edit.putString("serv", newServ);
 				edit.commit();
-				createButtons();
+				updateButtons();
 			}
 		});
 		changeServerDiag.setNegativeButton("Cancel",new OnClickListener(){
@@ -249,13 +256,20 @@ public class Drink_Main extends Activity {
 	{
 		AlertDialog.Builder serverDownDiag = new AlertDialog.Builder(this);
 		serverDownDiag.setTitle("Server is down");
-		serverDownDiag.setMessage("Server is down\nGo bug McGary");
+		serverDownDiag.setMessage("Server is down\nGo bug McGary\n(Or I can't connect to drink");
 		serverDownDiag.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 
 			}
 		});
 		serverDownDiag.show();
+	}
+	public void updateTitle()
+	/*
+	 * Updates the TextView that is at the top of the UI
+	 */
+	{
+		title.setText("Drink App"+"\n Current User: "+sp.getString("user", "null")+"\nCurrent Credits: "+drinkServ.command("GETBALANCE").get(0).split("\\s+")[1]);
 	}
 	public void logout()
 	/*
@@ -315,7 +329,7 @@ public class Drink_Main extends Activity {
 			buttons.remove(buttons.size()-1);
 		return buttons;
 	}
-	public void changeUsername()
+	public void changeUsernameAlert()
 	/*
 	 * Opens a dialog box and prompts user for new username and new password
 	 */
@@ -331,12 +345,12 @@ public class Drink_Main extends Activity {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				edit.putString("user", input2.getText().toString());
 				edit.commit();
-				login();
+				changePasswordAlert();
 			}
 		});
 		alert2.show();
 	}
-	public void login()
+	public void changePasswordAlert()
 	/*
 	 * Logs in a user
 	 */
@@ -355,12 +369,12 @@ public class Drink_Main extends Activity {
 				ArrayList<String>temp = drinkServ.command("PASS "+input.getText().toString());
 				if(temp.get(0).toLowerCase().indexOf("err") == -1)
 				{
-					title.setText("Drink App"+"\n Current User: "+sp.getString("user", "null")+"\nCurrent Credits: "+drinkServ.command("GETBALANCE").get(0).split("\\s+")[1]);
+					updateTitle();
 					return;
 				}
 				else
 				{
-					login();
+					changePasswordAlert();
 				}
 			}
 		});

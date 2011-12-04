@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, Android_projActivity!</string>
     <string name="app_name">aDrink</string>
-    <string name="Hi">Hello World</string>
-    <string name="new_game">new game</string>
-    <string name="help">Help</string>
     <string name="title">CSH Drink\nBy Andrew Hanes</string>
     <string name="delay">Set Delay</string>
     <string name="credentials">Enter User Information</string>
     <string name="options">Options</string>
-    <string name="about">Set Delay</string>
 </resources>

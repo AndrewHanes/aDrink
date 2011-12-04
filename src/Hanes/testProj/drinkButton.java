@@ -28,7 +28,7 @@ public class drinkButton extends Button {
 	Drink_Main drinkMain;
 	public drinkButton(Context context, String drink, int price, int count, int slot, Connector drinkServ, Drink_Main drinkMain)
 	{
-		super(context);
+		super(context); 
 		this.soopaContext = context;
 		this.drink = drink;
 		this.price = price;
@@ -72,6 +72,9 @@ public class drinkButton extends Button {
 		return count;
 	}
 	public String toString()
+	/*
+	 * Prints out a string representation of the button
+	 */
 	{
 		return this.drink+"  Price = "+this.price+"  Count = "+this.count;
 	}

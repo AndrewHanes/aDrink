@@ -23,6 +23,9 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/*
+ * This isnt used anymore
+ */
 public class Options extends Activity {
 	public void onCreate(Bundle savedInstanceState)
 	{

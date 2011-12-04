@@ -91,13 +91,13 @@ public class Connector {
 			}
 		}catch(IOException e)
 		{
-			// TODO Auto-generated catch block
+			Log.d("IOException",e.toString());
 			e.printStackTrace();
 			return null;
 		}
 		catch(NullPointerException e)
 		{
-			// TODO Auto-generated catch block
+			Log.d("NullPointerException",e.toString());
 			e.printStackTrace();
 			if(br == null)
 				Log.d("NULL","br "+br);

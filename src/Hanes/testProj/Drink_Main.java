@@ -154,6 +154,9 @@ public class Drink_Main extends Activity {
 		return true;
 	}
 	public void setDelay()
+	/*
+	 * Allows the user to set a delay.  It is stored in sp with the key "delay"
+	 */
 	{
 		AlertDialog.Builder inputDiag = new AlertDialog.Builder(this);
 		inputDiag.setTitle("Enter Delay");
@@ -178,6 +181,9 @@ public class Drink_Main extends Activity {
 		inputDiag.show();
 	}
 	public boolean onOptionsItemSelected(MenuItem item)
+	/*
+	 * What should be done based on the id of the menu item selected
+	 */
 	{
 		switch(item.getItemId()){
 		case R.id.delay:
@@ -230,7 +236,7 @@ public class Drink_Main extends Activity {
 		});
 		changeServerDiag.setNegativeButton("Cancel",new OnClickListener(){
 			public void onClick(DialogInterface dialog,int whichButton){
-
+				//Don't do anything
 			}
 
 		});

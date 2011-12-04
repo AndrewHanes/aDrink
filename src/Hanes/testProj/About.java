@@ -23,6 +23,9 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/*
+ * This isn't actually used anymore
+ */
 public class About extends Activity {
 	public void onCreate(Bundle savedInstanceState)
 	{

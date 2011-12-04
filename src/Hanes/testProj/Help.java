@@ -23,6 +23,9 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/*
+ * Not currently used
+ */
 public class Help extends Activity {
 	public void onCreate(Bundle savedInstanceState)
 	{

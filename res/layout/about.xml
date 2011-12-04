@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/about_ll"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	>
+	<TextView
+	android:id="@+id/about_TV"
+	android:text="CSH Drink Anroid Application\nBy Andrew Hanes\nahanes@csh.rit.edu\n\n\tThis app allows a drink to be ordered from an android phone.\n
+	  It does NOT user SSL, you have been warned."
+	android:layout_width="fill_parent"
+    android:layout_height="fill_parent"/>
+</LinearLayout>

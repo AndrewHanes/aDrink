@@ -5,9 +5,12 @@ package Hanes.testProj;
 import java.util.ArrayList;
 
 import Hanes.testProj.R;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class drinkButton extends Button {
 	/*
@@ -78,15 +81,31 @@ public class drinkButton extends Button {
 	 * This method handles dropping drinks
 	 */
 	{
-		ArrayList<String> back = drinkServ.command("DROP "+this.slot+" "+drinkMain.sp.getInt("delay", 0));	
-		if (back.get(0).indexOf("ERR") > -1)
-		{
-			drinkMain.displayAlert("Error dropping "+this.getDrink());
-		}
-		else
-		{
-			drinkMain.displayAlert("Successful Drop");	
-			drinkMain.updateButtons();
-		}
+		AlertDialog.Builder alert2 = new AlertDialog.Builder(soopaContext);
+		alert2.setTitle("Drop");
+		alert2.setMessage("Confirm drop of "+this.drink +"\nPrice = "+this.price);
+		// Set an EditText view to get user input 
+		alert2.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				ArrayList<String> back = drinkServ.command("DROP "+slot+" "+drinkMain.sp.getInt("delay", 0));	
+				if (back.get(0).indexOf("ERR") > -1)
+				{
+					drinkMain.displayAlert("Error dropping "+getDrink());
+				}
+				else
+				{
+					drinkMain.displayAlert("Successful Drop");	
+					drinkMain.updateButtons();
+				}
+
+			}
+		});
+		alert2.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+
+			}
+		});
+		alert2.show();
+
 	}
 }

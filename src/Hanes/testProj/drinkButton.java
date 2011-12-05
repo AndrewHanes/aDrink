@@ -5,12 +5,7 @@ package Hanes.testProj;
 import java.util.ArrayList;
 
 import Hanes.testProj.R;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.os.Looper;
-import android.os.Vibrator;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -86,7 +81,7 @@ public class drinkButton extends Button {
 		ArrayList<String> back = drinkServ.command("DROP "+this.slot+" "+drinkMain.sp.getInt("delay", 0));	
 		if (back.get(0).indexOf("ERR") > -1)
 		{
-			drinkMain.displayAlert("Error dropping drink");
+			drinkMain.displayAlert("Error dropping "+this.getDrink());
 		}
 		else
 		{

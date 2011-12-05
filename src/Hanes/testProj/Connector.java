@@ -3,20 +3,10 @@ package Hanes.testProj;
  * CSH Drink App by Andrew Hanes
  */
 import java.io.*;
-import java.net.Inet4Address;
-import java.net.InetAddress;
 import java.net.Socket;
-import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-
-import javax.net.SocketFactory;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLSocket;
-import javax.net.ssl.SSLSocketFactory;
-
 import Hanes.testProj.R;
-import android.net.SSLCertificateSocketFactory;
 import android.util.Log;
 
 public class Connector {

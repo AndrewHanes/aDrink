@@ -8,6 +8,8 @@ import Hanes.testProj.R;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,7 +36,15 @@ public class drinkButton extends Button {
 		this.count = count;
 		this.slot = slot;
 		this.drinkServ = drinkServ;
-		this.setText(this.drink+"  Price = "+this.price+"  Count = "+this.count);
+		if( this.count > 0 )
+		{
+			this.setText(this.drink+"  Price = "+this.price+"  Count = "+this.count);
+		}
+		else
+		{
+			this.setText("OUT OF STOCK - "+this.drink+"  Price = "+this.price+"  Count = "+this.count);
+			this.setTextColor(Color.RED);
+		}
 		this.setOnClickListener(new OnClickListener(){
 			public void onClick(View v)
 			/*
@@ -69,24 +79,36 @@ public class drinkButton extends Button {
 	{
 		return count;
 	}
-	public String toString()
-	/*
-	 * Prints out a string representation of the button
-	 */
-	{
-		return this.drink+"  Price = "+this.price+"  Count = "+this.count;
-	}
 	public void order()
 	/*
 	 * This method handles dropping drinks
 	 */
 	{
-		AlertDialog.Builder alert2 = new AlertDialog.Builder(soopaContext);
+		final AlertDialog.Builder alert2 = new AlertDialog.Builder(soopaContext);
 		alert2.setTitle("Drop");
 		alert2.setMessage("Confirm drop of "+this.drink +"\nPrice = "+this.price);
-		// Set an EditText view to get user input 
 		alert2.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
+				final AlertDialog.Builder alert3 = new AlertDialog.Builder(soopaContext);
+				alert3.setTitle("Drop");
+				alert3.setMessage("Dropping...");
+				alert2.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+
+						ArrayList<String> back = drinkServ.command("DROP "+slot+" "+drinkMain.sp.getInt("delay", 0));	
+						if (back.get(0).indexOf("ERR") > -1)
+						{
+							drinkMain.displayAlert("Error dropping "+getDrink());
+						}
+						else
+						{
+							drinkMain.displayAlert("Successful Drop");	
+							drinkMain.updateButtons();
+
+						}
+
+					}
+				});
 				ArrayList<String> back = drinkServ.command("DROP "+slot+" "+drinkMain.sp.getInt("delay", 0));	
 				if (back.get(0).indexOf("ERR") > -1)
 				{
@@ -96,6 +118,7 @@ public class drinkButton extends Button {
 				{
 					drinkMain.displayAlert("Successful Drop");	
 					drinkMain.updateButtons();
+
 				}
 
 			}

@@ -41,7 +41,6 @@ public class Drink_Main extends Activity {
 		setContentView(R.layout.main);
 		setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); 
 		this.linearLayout = (LinearLayout) findViewById(R.id.widget43);
-		//50 200 200
 		title = new TextView(this);
 		title.setText("Drink App");
 		title.setPadding(linearLayout.getWidth()/2, 10, 0, 20);
@@ -88,6 +87,7 @@ public class Drink_Main extends Activity {
 			//linearLayout.setScaleY(1);
 		}
 	}
+
 	public void displayAlert(String text)
 	/*
 	 * Displays an alert
@@ -124,21 +124,8 @@ public class Drink_Main extends Activity {
 		ArrayList<drinkButton> buttons = this.getButtons(this.drinkServ);
 		for (drinkButton dB : buttons)
 		{
-			if(dB.getCount() != 0)
-				linearLayout.addView(dB);
-			else
-			{
-				Log.d("Count 0",dB.toString());
-			}
+			linearLayout.addView(dB);
 		}
-	}
-	public void updateCredits(String curCreds)
-	/*
-	 * Updates credits
-	 */
-	{
-		updateTitle();
-
 	}
 	public boolean onCreateOptionsMenu(Menu menu)
 	/*
@@ -181,6 +168,12 @@ public class Drink_Main extends Activity {
 
 			}
 		});
+		inputDiag.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+
+			}
+
+		});
 		inputDiag.show();
 	}
 	public boolean onOptionsItemSelected(MenuItem item)
@@ -214,8 +207,6 @@ public class Drink_Main extends Activity {
 		AlertDialog.Builder changeServerDiag = new AlertDialog.Builder(this);
 		changeServerDiag.setTitle("Change Server");
 		changeServerDiag.setMessage("Select New Server");
-
-		// Set an EditText view to get user input 
 		final EditText input = new EditText(this);
 		final RadioButton ld = new RadioButton(this); ld.setText("Little Drink"); ld.setId(1);
 		final RadioButton s = new RadioButton(this); s.setText("Snack"); s.setId(2);
@@ -333,7 +324,6 @@ public class Drink_Main extends Activity {
 		AlertDialog.Builder alert2 = new AlertDialog.Builder(this);
 		alert2.setTitle("Username");
 		alert2.setMessage("Enter New Username");
-		// Set an EditText view to get user input 
 		final EditText input2 = new EditText(this);
 		alert2.setView(input2);
 
@@ -354,8 +344,6 @@ public class Drink_Main extends Activity {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		alert.setTitle("Password");
 		alert.setMessage("Enter Password for Account "+sp.getString("user", "null"));
-
-		// Set an EditText view to get user input 
 		final EditText input = new EditText(this);
 		input.setTransformationMethod(new PasswordTransformationMethod());
 		alert.setView(input);

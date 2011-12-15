@@ -243,7 +243,7 @@ public class Drink_Main extends Activity {
 	{
 		AlertDialog.Builder serverDownDiag = new AlertDialog.Builder(this);
 		serverDownDiag.setTitle("Server is down");
-		serverDownDiag.setMessage("Server is down\nGo bug McGary\n(Or I can't connect to drink");
+		serverDownDiag.setMessage("Server is down\nGo bug McGary\n(Or I can't connect to drink)");
 		serverDownDiag.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 

@@ -186,7 +186,7 @@ public class Drink_Main extends Activity {
 			this.setDelay();
 			return true;
 		case R.id.chserv:
-			this.changeServerAlert();
+			this.changeMachineAlert();
 			return true;
 		case R.id.chusr:
 			this.changeUsernameAlert();
@@ -197,7 +197,7 @@ public class Drink_Main extends Activity {
 		}
 		return false;
 	}
-	public void changeServerAlert()
+	public void changeMachineAlert()	
 	/*
 	 * Promts user for new server
 	 * 
@@ -205,9 +205,8 @@ public class Drink_Main extends Activity {
 	 */
 	{
 		AlertDialog.Builder changeServerDiag = new AlertDialog.Builder(this);
-		changeServerDiag.setTitle("Change Server");
-		changeServerDiag.setMessage("Select New Server");
-		final EditText input = new EditText(this);
+		changeServerDiag.setTitle("Change Machine");
+		changeServerDiag.setMessage("Select New Vending Machine");
 		final RadioButton ld = new RadioButton(this); ld.setText("Little Drink"); ld.setId(1);
 		final RadioButton s = new RadioButton(this); s.setText("Snack"); s.setId(2);
 		final RadioButton d = new RadioButton(this); d.setText("Drink"); d.setId(3);

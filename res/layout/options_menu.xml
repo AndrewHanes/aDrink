@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/menu_ops">
 	<item android:id="@+id/chserv"
-          android:title="Change Server"
+          android:title="Change Machine"
     /> 
     <item android:id="@+id/chusr"
     	  android:title="Change Username"

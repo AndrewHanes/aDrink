@@ -31,6 +31,7 @@ public class Drink_Main extends Activity {
 	SharedPreferences.Editor edit;
 	TextView title;
 	LinearLayout linearLayout;
+	User user = null;
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public class Drink_Main extends Activity {
 		 */
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		//this.user = new User()
 		setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); 
 		this.linearLayout = (LinearLayout) findViewById(R.id.widget43);
 		title = new TextView(this);
@@ -325,11 +327,10 @@ public class Drink_Main extends Activity {
 		alert2.setMessage("Enter New Username");
 		final EditText input2 = new EditText(this);
 		alert2.setView(input2);
-
 		alert2.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
-				edit.putString("user", input2.getText().toString());
-				edit.commit();
+				sp.edit().putString("user", input2.getText().toString());
+				sp.edit().commit();
 				changePasswordAlert();
 			}
 		});

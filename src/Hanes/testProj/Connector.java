@@ -3,6 +3,7 @@ package Hanes.testProj;
  * CSH Drink App by Andrew Hanes
  */
 import java.io.*;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -35,6 +36,27 @@ public class Connector {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public void reConnect()
+	{
+		InetAddress host = skt.getInetAddress();
+		int port = skt.getPort();
+		this.close();
+		try {
+			skt = new Socket(host,port);
+			this.br = new BufferedReader(new InputStreamReader(skt.getInputStream()));
+			this.bw = new BufferedWriter(new OutputStreamWriter(skt.getOutputStream()));
+			Log.d("Connected",this.recieve().toString());
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			Log.d("UnknownHost","Cant Connect to "+host);
+			e.printStackTrace();
+		} catch (IOException e) {
+			Log.d("IOException","IOException in Constructor");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 	public void close()
 	{

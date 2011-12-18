@@ -15,9 +15,11 @@ public class User {
 	String username = null;
 	Drink_Main dMain = null;
 	SharedPreferences sp = null;
+	String password = null;
 	public User(String username, String password, Drink_Main dMain, SharedPreferences sp)
 	{
 		this.username = username;
+		this.password = password;
 		this.dMain = dMain;
 		this.sp = sp;
 	}
@@ -29,18 +31,30 @@ public class User {
 	{
 		this.dMain = dMain;
 		this.sp = sp;
+		this.username = sp.getString("user",this.changeUsernameAlert());
+		this.password = sp.getString("pass", this.changePasswordAlert());
 	}
-	public String getUsername()
+	public boolean logIn()
 	{
-		return this.username;
+		dMain.drinkServ.command("USER " + sp.getString("user", "1235342343241"));
+		ArrayList<String>temp = dMain.drinkServ.command("PASS "+sp.getString("pass", "none"));
+		if (temp.get(0).indexOf("ERR") == -1)
+		{
+			return true;
+		}
+		return false;
+	}
+	public void setPass(String pass)
+	{
+		sp.edit().putString("pass", pass);
+		sp.edit().commit();
 	}
 	public void setUser(String username)
 	{
-		//sp.edit().putString("user", input2.getText().toString());
+		sp.edit().putString("user", username);
 		sp.edit().commit();
-		//changePasswordAlert();
 	}
-	public void changeUsernameAlert()
+	public String changeUsernameAlert()
 	/*
 	 * Opens a dialog box and prompts user for new username and new password
 	 */
@@ -56,36 +70,33 @@ public class User {
 			}
 		});
 		alert2.show();
+		return sp.getString("user", "nullUser");
 	}
-	/*
-	public void changePasswordAlert()
+	public String changePasswordAlert()
 	/*
 	 * Logs in a user
-	 
+	 */
 	{
-		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		AlertDialog.Builder alert = new AlertDialog.Builder(dMain);
 		alert.setTitle("Password");
 		alert.setMessage("Enter Password for Account "+sp.getString("user", "null"));
-		final EditText input = new EditText(this);
+		final EditText input = new EditText(dMain);
 		input.setTransformationMethod(new PasswordTransformationMethod());
 		alert.setView(input);
+		//Add check box to remember password
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
-				dMain.command("USER " +sp.getString("user", "nulluser"));
-				ArrayList<String>temp = drinkServ.command("PASS "+input.getText().toString());
-				if(temp.get(0).toLowerCase().indexOf("err") == -1)
-				{
-					dMain.updateTitle();
-					return;
-				}
-				else
-				{
-					changePasswordAlert();
-				}
+				setPass(input.getText().toString());
 			}
 		});
 		alert.show();
-		}
-		*/
-
+		return sp.getString("pass", "None");
+	}
+	public void clearUser()
+	{
+		sp.edit().remove("user");
+		sp.edit().remove("pass");
+		
+	}
+	
 }

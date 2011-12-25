@@ -130,6 +130,6 @@ public class Connector {
 	{
 		Log.d("COMMAND", s+'\n');
 		this.send(s+'\n');
-		return this.recieve();
+		return this.recieve();		
 	}
 }

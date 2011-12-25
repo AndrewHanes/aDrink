@@ -13,8 +13,12 @@ This app currently does NOT use encryption.  Use it at your own risk.
 
 To install:
 	Turn on allow unknown sources and remote debugging
+
 	Connect phone to computer
+
+	Download the latest version of the app from github and 
+	locate the .apk file in bin/
+
 	type adb install Drink_Main.apk
-	done
 
 If you find any bugs/don't like something please let me know

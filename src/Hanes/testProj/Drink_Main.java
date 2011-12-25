@@ -255,7 +255,10 @@ public class Drink_Main extends Activity {
 	 */
 	{
 		edit.remove("user");
+		edit.remove("pass");
 		edit.commit();
+		drinkServ.reConnect();
+		title.update();
 		this.displayAlert("User Credentials Wiped\nApp must be restarted to take effect");
 	}
 	public void changeMachine(String machine)

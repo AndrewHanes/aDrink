@@ -119,6 +119,7 @@ public class Connector {
 				Log.d("NULL","skt "+skt);
 			//return new ArrayList<String>();
 		}
+		Log.d("RECIEVE", temp.toString());
 		return temp;
 	}
 	public ArrayList<String> command(String s)
@@ -127,6 +128,7 @@ public class Connector {
 	 * Takes a string and returns the output from Drink
 	 */
 	{
+		Log.d("COMMAND", s+'\n');
 		this.send(s+'\n');
 		return this.recieve();
 	}

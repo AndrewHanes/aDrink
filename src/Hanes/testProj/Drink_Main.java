@@ -120,7 +120,7 @@ public class Drink_Main extends Activity {
 		linearLayout.addView(title);
 		ArrayList<drinkButton> buttons = this.getButtons(this.drinkServ);
 		for (drinkButton dB : buttons)
-		{
+		{	
 			linearLayout.addView(dB);
 		}
 		title.update();
@@ -259,7 +259,7 @@ public class Drink_Main extends Activity {
 		edit.commit();
 		drinkServ.reConnect();
 		title.update();
-		this.displayAlert("User Credentials Wiped\nApp must be restarted to take effect");
+		this.displayAlert("Wiped User Credentials");
 	}
 	public void changeMachine(String machine)
 	/*

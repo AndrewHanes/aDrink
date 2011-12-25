@@ -19,6 +19,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -56,9 +57,15 @@ public class Drink_Main extends Activity {
 			{
 				this.changeUsernameAlert();
 			}
+			else if (!sp.contains("pass"))
+			{
+				this.changePasswordAlert();
+			}
 			else
 			{
-				Log.d("Existing Username","Found existing username "+sp.getString("user", "....nevermind"));
+				drinkServ.command("USER " +sp.getString("user", "null"));
+				drinkServ.command("PASS " + sp.getString("pass","null"));
+				Log.d("Existing User/Pass","Found existing username/passwod "+sp.getString("user", "....nevermind") + "    " + sp.getString("pass", "....nevermind"));
 			}
 			AlertDialog.Builder noSSLAlert = new AlertDialog.Builder(this);
 			noSSLAlert.setTitle("WARNING");
@@ -116,6 +123,7 @@ public class Drink_Main extends Activity {
 		{
 			linearLayout.addView(dB);
 		}
+		title.update();
 	}
 	public boolean onCreateOptionsMenu(Menu menu)
 	/*
@@ -330,8 +338,13 @@ public class Drink_Main extends Activity {
 		alert.setMessage("Enter Password for Account "+sp.getString("user", "null"));
 		final EditText input = new EditText(this);
 		input.setTransformationMethod(new PasswordTransformationMethod());
-		alert.setView(input);
-		//TODO Add remember password dialog
+		LinearLayout ll = new LinearLayout(this);
+		ll.addView(input);
+		final CheckBox cb = new CheckBox(this);
+		cb.setText("Remember Password?");
+		input.setWidth(250);
+		ll.addView(cb);
+		alert.setView(ll);
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				drinkServ.command("USER " +sp.getString("user", "null"));
@@ -339,6 +352,12 @@ public class Drink_Main extends Activity {
 				if(temp.get(0).toLowerCase().indexOf("err") == -1)
 				{
 					title.update();
+					if (cb.isChecked())
+					{
+						edit.putString("pass", input.getText().toString());
+						edit.commit();
+						Log.d("Saved Password", input.getText().toString());
+					}
 					return;
 				}
 				else

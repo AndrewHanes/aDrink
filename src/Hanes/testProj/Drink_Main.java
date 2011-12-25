@@ -29,9 +29,8 @@ public class Drink_Main extends Activity {
 	public Connector drinkServ;
 	SharedPreferences sp;
 	SharedPreferences.Editor edit;
-	TextView title;
+	Head title;
 	LinearLayout linearLayout;
-	User user = null;
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -43,14 +42,6 @@ public class Drink_Main extends Activity {
 		//this.user = new User()
 		setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); 
 		this.linearLayout = (LinearLayout) findViewById(R.id.widget43);
-		title = new TextView(this);
-		title.setText("Drink App");
-		title.setPadding(linearLayout.getWidth()/2, 10, 0, 20);
-		title.setGravity(Gravity.CENTER_HORIZONTAL);
-		title.setClickable(false);
-		title.setTextColor(Color.BLACK);
-		title.setBackgroundColor(Color.rgb(50, 100, 200));
-		//this.title = (TextView)findViewById(R.id.title);
 		sp = this.getSharedPreferences("drinkPrefs", MODE_WORLD_READABLE);
 		edit = sp.edit();
 		this.drinkServ = new Connector(sp.getString("serv", "drink")+".csh.rit.edu",4242);
@@ -60,16 +51,14 @@ public class Drink_Main extends Activity {
 		}
 		else
 		{
+			this.title = new Head(this, this, drinkServ);
 			if(!sp.contains("user"))
 			{
 				this.changeUsernameAlert();
 			}
 			else
 			{
-				title.setText(R.string.title);
 				Log.d("Existing Username","Found existing username "+sp.getString("user", "....nevermind"));
-				if(!(drinkServ.command("GETBALANCE").get(0).indexOf("ERR") == -1))
-					changePasswordAlert();
 			}
 			AlertDialog.Builder noSSLAlert = new AlertDialog.Builder(this);
 			noSSLAlert.setTitle("WARNING");
@@ -86,7 +75,6 @@ public class Drink_Main extends Activity {
 			linearLayout.setPadding(20, 10, 20, 10);
 			updateButtons();
 			Log.d("Done","Done w/ onCreate");
-			//linearLayout.setScaleY(1);
 		}
 	}
 
@@ -236,6 +224,7 @@ public class Drink_Main extends Activity {
 
 		});
 		changeServerDiag.show();
+		title.update();
 	}
 	public void serverDown()
 	/*
@@ -251,13 +240,6 @@ public class Drink_Main extends Activity {
 			}
 		});
 		serverDownDiag.show();
-	}
-	public void updateTitle()
-	/*
-	 * Updates the TextView that is at the top of the UI
-	 */
-	{
-		title.setText("Drink App"+"\n Current User: "+sp.getString("user", "null")+"\nCurrent Credits: "+drinkServ.command("GETBALANCE").get(0).split("\\s+")[1]);
 	}
 	public void logout()
 	/*
@@ -307,6 +289,7 @@ public class Drink_Main extends Activity {
 				count = Integer.parseInt(temp[place+1].trim());
 				buttons.add(new drinkButton(this,name,price,count,slot,drinkServ,this));
 			}
+			title.update();
 		}
 		catch(Exception e)
 		{
@@ -329,8 +312,9 @@ public class Drink_Main extends Activity {
 		alert2.setView(input2);
 		alert2.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
-				sp.edit().putString("user", input2.getText().toString());
-				sp.edit().commit();
+				edit.putString("user", input2.getText().toString());
+				Log.d("USER", input2.getText().toString());
+				edit.commit();
 				changePasswordAlert();
 			}
 		});
@@ -347,13 +331,14 @@ public class Drink_Main extends Activity {
 		final EditText input = new EditText(this);
 		input.setTransformationMethod(new PasswordTransformationMethod());
 		alert.setView(input);
+		//TODO Add remember password dialog
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
-				drinkServ.command("USER " +sp.getString("user", "nulluser"));
+				drinkServ.command("USER " +sp.getString("user", "null"));
 				ArrayList<String>temp = drinkServ.command("PASS "+input.getText().toString());
 				if(temp.get(0).toLowerCase().indexOf("err") == -1)
 				{
-					updateTitle();
+					title.update();
 					return;
 				}
 				else

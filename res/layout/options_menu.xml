@@ -5,10 +5,10 @@
           android:title="Change Machine"
     /> 
     <item android:id="@+id/chusr"
-    	  android:title="Change Username"
+    	  android:title="Change User"
 	/>
 	<item android:id="@+id/delay"
-		  android:title="@string/delay"
+		  android:title="Set Delay"
 		  />
 	<item android:id="@+id/logout"
 		  android:title="Wipe Credentials"

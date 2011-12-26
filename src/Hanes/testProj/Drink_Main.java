@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
@@ -41,7 +42,7 @@ public class Drink_Main extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		//this.user = new User()
-		setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); 
+		//setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); 
 		this.linearLayout = (LinearLayout) findViewById(R.id.widget43);
 		sp = this.getSharedPreferences("drinkPrefs", MODE_WORLD_READABLE);
 		edit = sp.edit();
@@ -67,16 +68,8 @@ public class Drink_Main extends Activity {
 				drinkServ.command("PASS " + sp.getString("pass","null"));
 				Log.d("Existing User/Pass","Found existing username/passwod "+sp.getString("user", "....nevermind") + "    " + sp.getString("pass", "....nevermind"));
 			}
-			AlertDialog.Builder noSSLAlert = new AlertDialog.Builder(this);
-			noSSLAlert.setTitle("WARNING");
-			noSSLAlert.setMessage("THIS APP DOES NOT USE ENCRYPTION IN ITS CURRENT STATE\nUSE IT AT YOUR OWN RISK");
-			noSSLAlert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-
-				}
-			});
-			noSSLAlert.show();
-			/*Done getting user info*/
+			this.displayAlert("WARNING: This app does NOT USE SSL!!!\nUse it at your own risk!\n\n" +
+					"Also, you're responsible for all data charges that result from using this application");
 			linearLayout.addView(title);
 			linearLayout.setBackgroundColor(Color.GRAY);
 			linearLayout.setPadding(20, 10, 20, 10);
@@ -84,7 +77,24 @@ public class Drink_Main extends Activity {
 			Log.d("Done","Done w/ onCreate");
 		}
 	}
-
+	public void onConfigurationChanged(Configuration newConfig)
+	/*
+	 * Called when the screen is rotated
+	 * 
+	 * Without this method onCreate() is called again, which is messy as hell
+	 */
+	{
+		super.onConfigurationChanged(newConfig);
+		this.linearLayout.removeAllViews();
+		setContentView(R.layout.main);
+		this.linearLayout = (LinearLayout) findViewById(R.id.widget43);
+		linearLayout.addView(title);
+		linearLayout.setBackgroundColor(Color.GRAY);
+		linearLayout.setPadding(20, 10, 20, 10);
+		updateButtons();
+		Log.d("Done","Done w/ onConfigurationChanged");
+	}
+	
 	public void displayAlert(String text)
 	/*
 	 * Displays an alert

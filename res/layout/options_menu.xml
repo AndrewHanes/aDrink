@@ -2,13 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/menu_ops">
 	<item android:id="@+id/chserv"
-          android:title="Change Machine"
+          android:title="Select Machine"
     /> 
     <item android:id="@+id/chusr"
-    	  android:title="Change Username"
+    	  android:title="Change User"
 	/>
 	<item android:id="@+id/delay"
-		  android:title="@string/delay"
+		  android:title="Set Delay"
 		  />
 	<item android:id="@+id/logout"
 		  android:title="Wipe Credentials"

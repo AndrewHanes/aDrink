@@ -41,8 +41,6 @@ public class Drink_Main extends Activity {
 		 */
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		//this.user = new User()
-		//setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); 
 		this.linearLayout = (LinearLayout) findViewById(R.id.widget43);
 		sp = this.getSharedPreferences("drinkPrefs", MODE_WORLD_READABLE);
 		edit = sp.edit();
@@ -197,6 +195,7 @@ public class Drink_Main extends Activity {
 			this.changeMachineAlert();
 			return true;
 		case R.id.chusr:
+			this.logout();
 			this.changeUsernameAlert();
 			return true;
 		case R.id.logout:
@@ -265,8 +264,10 @@ public class Drink_Main extends Activity {
 	 */
 	{
 		edit.remove("user");
+		edit.remove("pass");
 		edit.commit();
-		this.displayAlert("User Credentials Wiped\nApp must be restarted to take effect");
+		drinkServ.reConnect();
+		this.displayAlert("User Credentials Wiped");
 	}
 	public void changeMachine(String machine)
 	/*

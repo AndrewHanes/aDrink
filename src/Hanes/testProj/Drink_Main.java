@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 public class Drink_Main extends Activity {
@@ -348,14 +349,17 @@ public class Drink_Main extends Activity {
 		alert.setTitle("Password");
 		alert.setMessage("Enter Password for Account "+sp.getString("user", "null"));
 		final EditText input = new EditText(this);
+		TableLayout tl = new TableLayout(this);
 		input.setTransformationMethod(new PasswordTransformationMethod());
-		LinearLayout ll = new LinearLayout(this);
-		ll.addView(input);
 		final CheckBox cb = new CheckBox(this);
 		cb.setText("Remember Password?");
-		input.setWidth(250);
-		ll.addView(cb);
-		alert.setView(ll);
+		input.setWidth(240);
+		//LinearLayout ll = new LinearLayout(this);
+		//ll.addView(input);
+		//ll.addView(cb);
+		tl.addView(input);
+		tl.addView(cb);
+		alert.setView(tl);
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				drinkServ.command("USER " +sp.getString("user", "null"));

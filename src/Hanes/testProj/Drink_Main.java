@@ -4,7 +4,6 @@ package Hanes.testProj;
  */
 
 import java.util.ArrayList;
-import Hanes.testProj.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -267,12 +266,9 @@ public class Drink_Main extends Activity {
 		edit.remove("pass");
 		edit.commit();
 		drinkServ.reConnect();
-<<<<<<< HEAD
 		title.update();
 		this.displayAlert("Wiped User Credentials");
-=======
 		this.displayAlert("User Credentials Wiped");
->>>>>>> dev
 	}
 	public void changeMachine(String machine)
 	/*

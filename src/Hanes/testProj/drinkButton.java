@@ -4,7 +4,6 @@ package Hanes.testProj;
  */
 import java.util.ArrayList;
 
-import Hanes.testProj.R;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;

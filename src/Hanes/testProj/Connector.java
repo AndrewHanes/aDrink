@@ -7,12 +7,14 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import Hanes.testProj.R;
 import android.util.Log;
 
 public class Connector {
 	/*
 	 * Class for connecting to the drink server
+	 * 
+	 * TODO Add SSL support when drink has SSL added to it.
+	 *		Just need to add the CSH cert to the trusted certificates
 	 */
 	BufferedReader br = null;
 	BufferedWriter bw = null;
@@ -38,6 +40,10 @@ public class Connector {
 		}
 	}
 	public void reConnect()
+	/*
+	 * Reconnects to the host
+	 * Allows a user to log off
+	 */
 	{
 		InetAddress host = skt.getInetAddress();
 		int port = skt.getPort();

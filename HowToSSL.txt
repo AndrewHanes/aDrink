@@ -1,5 +1,18 @@
+HowToSSL.txt for aDrink
+Andrew Hanes
+amh7738@rit.edu
+
+Because drink doesn't currently have ssl support, 
+I'm making a text file that describes the process 
+of implementing it for when it is available.  Without 
+this file it is likely that I will forget how I wanted 
+to do it.
+
+
 First, add the certificate used by drink to the 
-list of trusted certificates on the android device
+list of trusted certificates on the android device.
+This is necessary because the certificate for drink is 
+self signed.
 
 Settings -> Location & Security -> Manage Trusted Certificates
 

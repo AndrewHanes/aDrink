@@ -1,0 +1,10 @@
+First, add the certificate used by drink to the 
+list of trusted certificates on the android device
+
+Settings -> Location & Security -> Manage Trusted Certificates
+
+Use this:
+http://developer.android.com/reference/org/apache/http/conn/ssl/SSLSocketFactory.html
+
+Just make a trust store with the certificate used by drink 
+and use SSLSocketFactory to get a SSLSocket, then connect

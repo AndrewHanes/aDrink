@@ -38,11 +38,12 @@ public class DrinkButton extends Button {
 		this.drinkServ = drinkServ;
 		if( this.count > 0 )
 		{
-			this.setText(this.drink+"  Price = "+this.price+"  Count = "+this.count);
+			this.setText(this.drink.substring(1,this.drink.length()-1)+" | " + this.price+" Credits | "+ this.count+ " left");
 		}
 		else
 		{
-			this.setText("OUT OF STOCK - "+this.drink+"  Price = "+this.price+"  Count = "+this.count);
+			this.setEnabled(false);
+			this.setText("OUT OF STOCK - "+this.drink.substring(1,this.drink.length()-1)+" | " + this.price+" Credits");
 			this.setTextColor(Color.RED);
 		}
 		this.setOnClickListener(new OnClickListener(){

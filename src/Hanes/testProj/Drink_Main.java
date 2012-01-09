@@ -122,8 +122,8 @@ public class Drink_Main extends Activity {
 		this.changeMachine(sp.getString("serv", "d"));
 		linearLayout.removeAllViews();
 		linearLayout.addView(title);
-		ArrayList<drinkButton> buttons = this.getButtons(this.drinkServ);
-		for (drinkButton dB : buttons)
+		ArrayList<DrinkButton> buttons = this.getButtons(this.drinkServ);
+		for (DrinkButton dB : buttons)
 		{	
 			linearLayout.addView(dB);
 		}
@@ -274,13 +274,13 @@ public class Drink_Main extends Activity {
 	{
 		this.drinkServ.command("machine "+machine);
 	}
-	public ArrayList<drinkButton> getButtons(Connector drinkServ)
+	public ArrayList<DrinkButton> getButtons(Connector drinkServ)
 	/*
 	 * Returns an ArrayList that contains buttons for all of the drinks
 	 */
 	{
 		ArrayList<String> drinks = drinkServ.command("stat");
-		ArrayList<drinkButton> buttons = new ArrayList<drinkButton>();
+		ArrayList<DrinkButton> buttons = new ArrayList<DrinkButton>();
 		int price,slot,count,place;
 		price = -256;
 		slot = -256;
@@ -304,14 +304,14 @@ public class Drink_Main extends Activity {
 				slot = Integer.parseInt(temp[0].trim());
 				price = Integer.parseInt(temp[place].trim());
 				count = Integer.parseInt(temp[place+1].trim());
-				buttons.add(new drinkButton(this,name,price,count,slot,drinkServ,this));
+				buttons.add(new DrinkButton(this,name,price,count,slot,drinkServ,this));
 			}
 			title.update();
 		}
 		catch(Exception e)
 		{
 			Log.d(e.toString(),e.toString());
-			buttons.add(new drinkButton(this,slot+" ERROR: "+name,price,count,slot,drinkServ,this));
+			buttons.add(new DrinkButton(this,slot+" ERROR: "+name,price,count,slot,drinkServ,this));
 		}	
 		if(buttons.size() > 0)
 			buttons.remove(buttons.size()-1);

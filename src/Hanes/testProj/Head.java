@@ -35,4 +35,5 @@ public class Head extends TextView {
 			this.setText("Drink App\nNo User Logged In");
 		}
 	}
+	
 }

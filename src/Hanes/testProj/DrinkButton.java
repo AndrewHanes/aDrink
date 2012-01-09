@@ -1,4 +1,5 @@
 package Hanes.testProj;
+
 /*
  * CSH Drink App by Andrew Hanes
  */
@@ -13,7 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class drinkButton extends Button {
+public class DrinkButton extends Button {
 	/*
 	 * drinkButton supports all of the Button methods, but is automatically set up
 	 * to provide the needed information
@@ -25,7 +26,7 @@ public class drinkButton extends Button {
 	Connector drinkServ;
 	Context soopaContext;
 	Drink_Main drinkMain;
-	public drinkButton(Context context, String drink, int price, int count, int slot, Connector drinkServ, Drink_Main drinkMain)
+	public DrinkButton(Context context, String drink, int price, int count, int slot, Connector drinkServ, Drink_Main drinkMain)
 	{
 		super(context); 
 		this.soopaContext = context;

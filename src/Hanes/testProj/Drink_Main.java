@@ -155,6 +155,33 @@ public class Drink_Main extends Activity {
 		inputDiag.setMessage("Enter Delay (int)\nCurrent delay = "+sp.getInt("delay", 0));
 		final EditText input = new EditText(this);
 		inputDiag.setView(input);
+		inputDiag.setOnKeyListener(new OnKeyListener() {
+			public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+				if (keyCode == KeyEvent.KEYCODE_ENTER)
+				{
+					try
+					{
+						int n = Integer.parseInt(input.getText().toString());
+						if( n < 1000 && n > 0)
+							edit.putInt("delay", n);
+						else
+						{
+							displayAlert("Invalid value\nRequires 0 < Delay < 1000");
+							edit.putInt("delay", 0);
+						}
+					}
+					catch(Exception e)
+					{
+						edit.putInt("delay",0);
+						displayAlert("Invalid value\n Requires 0 < n < 1000");
+					}
+					edit.commit();
+					dialog.dismiss();
+					return true;
+				}
+				return false;
+			}
+		});
 		inputDiag.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				try
@@ -345,9 +372,9 @@ public class Drink_Main extends Activity {
 					return true;
 				}
 				return false;
-					
+
 			}
-			
+
 		});
 		alert2.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
@@ -390,18 +417,20 @@ public class Drink_Main extends Activity {
 							edit.commit();
 							Log.d("Saved Password", input.getText().toString());
 						}
+						dialog.dismiss();
 						return true;
 					}
 					else
 					{
+						dialog.dismiss();
 						changePasswordAlert();
 						displayAlert("Invalid Username/Password");
 					}
 				}
 				return false;
-					
+
 			}
-			
+
 		});
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {

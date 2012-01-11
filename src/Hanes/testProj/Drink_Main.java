@@ -15,6 +15,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -332,20 +333,21 @@ public class Drink_Main extends Activity {
 		alert2.setMessage("Enter New Username");
 		final EditText input2 = new EditText(this);
 		alert2.setView(input2);
-		alert2.setOnKeyListener(new OnKeyListener(){
-			public boolean onKey(DialogInterface dialogInterface, int val, KeyEvent event) {
-				if(event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
+		alert2.setOnKeyListener(new OnKeyListener() {
+			public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+				if (keyCode == KeyEvent.KEYCODE_ENTER)
 				{
 					edit.putString("user", input2.getText().toString());
 					Log.d("USER", input2.getText().toString());
 					edit.commit();
-					changePasswordAlert(); 
-					dialogInterface.dismiss();
-					alert2.setMessage("ASDASD");
+					changePasswordAlert();
+					dialog.dismiss();
 					return true;
 				}
 				return false;
+					
 			}
+			
 		});
 		alert2.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
@@ -373,6 +375,34 @@ public class Drink_Main extends Activity {
 		cb.setText("Remember Password?");
 		tb.addView(cb);
 		alert.setView(tb);
+		alert.setOnKeyListener(new OnKeyListener() {
+			public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+				if (keyCode == KeyEvent.KEYCODE_ENTER)
+				{
+					drinkServ.command("USER " +sp.getString("user", "null"));
+					ArrayList<String>temp = drinkServ.command("PASS "+input.getText().toString());
+					if(temp.get(0).toLowerCase().indexOf("err") == -1)
+					{
+						title.update();
+						if (cb.isChecked())
+						{
+							edit.putString("pass", input.getText().toString());
+							edit.commit();
+							Log.d("Saved Password", input.getText().toString());
+						}
+						return true;
+					}
+					else
+					{
+						changePasswordAlert();
+						displayAlert("Invalid Username/Password");
+					}
+				}
+				return false;
+					
+			}
+			
+		});
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				drinkServ.command("USER " +sp.getString("user", "null"));

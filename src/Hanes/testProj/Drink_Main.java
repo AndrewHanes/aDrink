@@ -20,11 +20,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TableLayout;
 
 public class Drink_Main extends Activity {
 	public Connector drinkServ;
@@ -364,39 +367,12 @@ public class Drink_Main extends Activity {
 		alert.setMessage("Enter Password for Account "+sp.getString("user", "null"));
 		final EditText input = new EditText(this);
 		input.setTransformationMethod(new PasswordTransformationMethod());
-		LinearLayout ll = new LinearLayout(this);
-		ll.addView(input);
+		TableLayout tb = new TableLayout(this);
+		tb.addView(input);
 		final CheckBox cb = new CheckBox(this);
 		cb.setText("Remember Password?");
-		input.setWidth(250);
-		ll.addView(cb);
-		alert.setView(ll);
-		alert.setOnKeyListener(new OnKeyListener(){
-			public boolean onKey(DialogInterface dialogInterface, int val, KeyEvent event) {
-				if(event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
-				{
-					drinkServ.command("USER " +sp.getString("user", "null"));
-					ArrayList<String>temp = drinkServ.command("PASS "+input.getText().toString());
-					if(temp.get(0).toLowerCase().indexOf("err") == -1)
-					{
-						title.update();
-						if (cb.isChecked())
-						{
-							edit.putString("pass", input.getText().toString());
-							edit.commit();
-							Log.d("Saved Password", input.getText().toString());
-						}
-						return true;
-					}
-					else
-					{
-						changePasswordAlert();
-						displayAlert("Invalid Username/Password");
-					}
-				}
-				return false;
-			}
-		});
+		tb.addView(cb);
+		alert.setView(tb);
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				drinkServ.command("USER " +sp.getString("user", "null"));

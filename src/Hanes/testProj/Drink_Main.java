@@ -230,6 +230,7 @@ public class Drink_Main extends Activity {
 			return true;
 		case R.id.logout:
 			this.logout();
+			this.displayAlert("User Credentials Wiped");
 			return true;
 		}
 		return false;
@@ -298,7 +299,6 @@ public class Drink_Main extends Activity {
 		edit.commit();
 		drinkServ.reConnect();
 		title.update();
-		this.displayAlert("User Credentials Wiped");
 	}
 	public void changeMachine(String machine)
 	/*

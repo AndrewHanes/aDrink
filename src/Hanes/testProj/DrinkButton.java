@@ -99,7 +99,7 @@ public class DrinkButton extends Button {
 						ArrayList<String> back = drinkServ.command("DROP "+slot+" "+drinkMain.sp.getInt("delay", 0));	
 						if (back.get(0).indexOf("ERR") > -1)
 						{
-							drinkMain.displayAlert("Error dropping "+getDrink());
+							
 						}
 						else
 						{
@@ -113,7 +113,8 @@ public class DrinkButton extends Button {
 				ArrayList<String> back = drinkServ.command("DROP "+slot+" "+drinkMain.sp.getInt("delay", 0));	
 				if (back.get(0).indexOf("ERR") > -1)
 				{
-					drinkMain.displayAlert("Error dropping "+getDrink());
+					String s = back.get(0);
+					drinkMain.displayAlert(s);
 				}
 				else
 				{

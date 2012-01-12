@@ -162,11 +162,11 @@ public class Drink_Main extends Activity {
 					try
 					{
 						int n = Integer.parseInt(input.getText().toString());
-						if( n < 1000 && n > 0)
+						if( n < 1000 && n > -1)
 							edit.putInt("delay", n);
 						else
 						{
-							displayAlert("Invalid value\nRequires 0 < Delay < 1000");
+							displayAlert("Invalid value\nRequires -1 < Delay < 1000");
 							edit.putInt("delay", 0);
 						}
 					}

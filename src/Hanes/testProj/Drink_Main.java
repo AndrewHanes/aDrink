@@ -67,7 +67,7 @@ public class Drink_Main extends Activity {
 			{
 				drinkServ.command("USER " +sp.getString("user", "null"));
 				drinkServ.command("PASS " + sp.getString("pass","null"));
-				Log.d("Existing User/Pass","Found existing username/passwod "+sp.getString("user", "....nevermind") + "    " + sp.getString("pass", "....nevermind"));
+				//Log.d("Existing User/Pass","Found existing username/passwod "+sp.getString("user", "....nevermind") + "    " + sp.getString("pass", "....nevermind"));
 			}
 			this.displayAlert("WARNING: This app does NOT USE SSL!!!\nUse it at your own risk!\n\n" +
 					"Also, you're responsible for all data charges that result from using this application");
@@ -410,12 +410,12 @@ public class Drink_Main extends Activity {
 					ArrayList<String>temp = drinkServ.command("PASS "+input.getText().toString());
 					if(temp.get(0).toLowerCase().indexOf("err") == -1)
 					{
+						Log.d("LOGIN","LOGIN Succeeded");
 						title.update();
 						if (cb.isChecked())
 						{
 							edit.putString("pass", input.getText().toString());
 							edit.commit();
-							Log.d("Saved Password", input.getText().toString());
 						}
 						dialog.dismiss();
 						return true;
@@ -443,7 +443,6 @@ public class Drink_Main extends Activity {
 					{
 						edit.putString("pass", input.getText().toString());
 						edit.commit();
-						Log.d("Saved Password", input.getText().toString());
 					}
 					return;
 				}

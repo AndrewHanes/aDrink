@@ -5,9 +5,10 @@ amh7738@rit.edu
 This app is intended to allow a user to order items from the vending
 machines at Computer Science House using their android phone.
 
-The app is mostly functional, but still needs some polishing.  While 
-I have not experienced issues with purchasing things, it should be noted 
-that it is possible for the app to make incorrect purchases.
+While I have not experienced issues with purchasing things, it 
+should be noted that it is possible for the app to make incorrect purchases.
+There are also several current bugs with drink that cause issues with this app.
+
 
 *** Drink does not currently have SSL support, because of that ***
 *** this app does NOT USE SSL.  Please see HowToSSL.txt for    ***

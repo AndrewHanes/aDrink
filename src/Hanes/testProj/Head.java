@@ -7,7 +7,9 @@ import android.graphics.Color;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.TextView;
-
+/*
+ * The title bar on the main page of the UI
+ */
 public class Head extends TextView {
 	Connector drinkServ;
 	String text = "Drink App";
@@ -22,6 +24,9 @@ public class Head extends TextView {
 		this.setBackgroundColor(Color.rgb(50, 100, 200));
 		this.update();
 	}
+	/*
+	 * Updated the text within the title
+	 */
 	public void update()
 	{
 		ArrayList<String> output = drinkServ.command("GETBALANCE");

@@ -38,10 +38,11 @@ public class Drink_Main extends Activity {
 	LinearLayout linearLayout;
 	/** Called when the activity is first created. */
 	@Override
+	/*
+	 * Sets up the GUI and connector class.
+	 * This method is called when the app is first started
+	 */
 	public void onCreate(Bundle savedInstanceState) {
-		/*
-		 * Sets up the GUI and connector class.  
-		 */
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		this.linearLayout = (LinearLayout) findViewById(R.id.widget43);
@@ -78,12 +79,13 @@ public class Drink_Main extends Activity {
 			Log.d("Done","Done w/ onCreate");
 		}
 	}
-	public void onConfigurationChanged(Configuration newConfig)
 	/*
-	 * Called when the screen is rotated
+	 * Called when the screen is rotated.  Doesn't need to be called within this 
+	 * code, the phone will handle it
 	 * 
 	 * Without this method onCreate() is called again, which is messy as hell
 	 */
+	public void onConfigurationChanged(Configuration newConfig)
 	{
 		super.onConfigurationChanged(newConfig);
 		this.linearLayout.removeAllViews();
@@ -95,11 +97,13 @@ public class Drink_Main extends Activity {
 		updateButtons();
 		Log.d("Done","Done w/ onConfigurationChanged");
 	}
-
-	public void displayAlert(String text)
 	/*
 	 * Displays an alert
+	 * 
+	 * @param  text  The message to be displayed
+	 * 
 	 */
+	public void displayAlert(String text)
 	{
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		alert.setTitle("Alert");
@@ -114,17 +118,20 @@ public class Drink_Main extends Activity {
 	public void onDestroy()
 	/*
 	 * Runs when the app is closed
+	 * The phone will take care of running it
 	 */
 	{
 		super.onDestroy();
 		Log.d("Goodbye Cruel World!!!!","Exiting");
 		drinkServ.close();
 	}
-	public void updateButtons()
 	/*
 	 * Creates buttons
-	 * Preconditions:  linearLayout has been initialized, drinkServ has been initialized
+	 * 
+	 * @precondition linearLayout has been initialized, drinkServ has been 
+	 * initialized, title has been initialized
 	 */
+	public void updateButtons()
 	{
 		this.changeMachine(sp.getString("serv", "d"));
 		linearLayout.removeAllViews();
@@ -136,19 +143,22 @@ public class Drink_Main extends Activity {
 		}
 		title.update();
 	}
-	public boolean onCreateOptionsMenu(Menu menu)
 	/*
 	 * Uses options_menu.xml to create an options menu
+	 * 
+	 * This method is run by the phone
 	 */
+	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		MenuInflater inflater = this.getMenuInflater();
 		inflater.inflate(R.layout.options_menu, menu);
 		return true;
 	}
-	public void setDelay()
 	/*
-	 * Allows the user to set a delay.  It is stored in sp with the key "delay"
+	 * Opens an AlertDialog promoting the user to enter a delay
+	 * 
 	 */
+	public void setDelay()
 	{
 		AlertDialog.Builder inputDiag = new AlertDialog.Builder(this);
 		inputDiag.setTitle("Enter Delay");
@@ -184,21 +194,23 @@ public class Drink_Main extends Activity {
 		});
 		inputDiag.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
+				int n = 0;
 				try
 				{
-					int n = Integer.parseInt(input.getText().toString());
-					if( n < 1000 && n > 0)
-						edit.putInt("delay", n);
-					else
-					{
-						displayAlert("Invalid value\nRequires 0 < Delay < 1000");
-						edit.putInt("delay", 0);
-					}
+					n = Integer.parseInt(input.getText().toString());
+
 				}
 				catch(Exception e)
 				{
-					edit.putInt("delay",0);
+					n = 0;
 					displayAlert("Invalid value\n Requires 0 < n < 1000");
+				}
+				if( n < 1000 && n >= 0)
+					edit.putInt("delay", n);
+				else
+				{
+					displayAlert("Invalid value\nRequires 0 < Delay < 1000");
+					edit.putInt("delay", 0);
 				}
 				edit.commit();
 
@@ -212,10 +224,10 @@ public class Drink_Main extends Activity {
 		});
 		inputDiag.show();
 	}
-	public boolean onOptionsItemSelected(MenuItem item)
 	/*
 	 * What should be done based on the id of the menu item selected
 	 */
+	public boolean onOptionsItemSelected(MenuItem item)
 	{
 		switch(item.getItemId()){
 		case R.id.delay:
@@ -235,12 +247,11 @@ public class Drink_Main extends Activity {
 		}
 		return false;
 	}
-	public void changeMachineAlert()	
 	/*
 	 * Promts user for new server
 	 * 
-	 * TODO Make it a menu
 	 */
+	public void changeMachineAlert()	
 	{
 		AlertDialog.Builder changeServerDiag = new AlertDialog.Builder(this);
 		changeServerDiag.setTitle("Change Machine");
@@ -274,10 +285,10 @@ public class Drink_Main extends Activity {
 		changeServerDiag.show();
 		title.update();
 	}
-	public void serverDown()
 	/*
 	 * Displays a message if the server is down
 	 */
+	public void serverDown()
 	{
 		AlertDialog.Builder serverDownDiag = new AlertDialog.Builder(this);
 		serverDownDiag.setTitle("Server is down");
@@ -289,10 +300,13 @@ public class Drink_Main extends Activity {
 		});
 		serverDownDiag.show();
 	}
-	public void logout()
 	/*
-	 * Logs the currently logged in user out
+	 * Logs the currently logged in user out by removing 
+	 * all user info and then reconnecting to the server
+	 * 
+	 * @precondition Drink Server has been initialized
 	 */
+	public void logout()
 	{
 		edit.remove("user");
 		edit.remove("pass");
@@ -300,17 +314,21 @@ public class Drink_Main extends Activity {
 		drinkServ.reConnect();
 		title.update();
 	}
-	public void changeMachine(String machine)
 	/*
 	 * Switches to another server. Current options are ld, d, s
+	 * 
+	 * @precondition Drink Server has been initialized
 	 */
+	public void changeMachine(String machine)
 	{
 		this.drinkServ.command("machine "+machine);
 	}
-	public ArrayList<DrinkButton> getButtons(Connector drinkServ)
 	/*
 	 * Returns an ArrayList that contains buttons for all of the drinks
+	 * 
+	 * @precondition Drink Server has been initialized
 	 */
+	public ArrayList<DrinkButton> getButtons(Connector drinkServ)
 	{
 		ArrayList<String> drinks = drinkServ.command("stat");
 		ArrayList<DrinkButton> buttons = new ArrayList<DrinkButton>();
@@ -350,10 +368,12 @@ public class Drink_Main extends Activity {
 			buttons.remove(buttons.size()-1);
 		return buttons;
 	}
-	public void changeUsernameAlert()
 	/*
 	 * Opens a dialog box and prompts user for new username and new password
+	 * 
+	 * @precondition Drink Server has been initialized
 	 */
+	public void changeUsernameAlert()
 	{
 		final AlertDialog.Builder alert2 = new AlertDialog.Builder(this);
 		alert2.setTitle("Username");
@@ -386,10 +406,12 @@ public class Drink_Main extends Activity {
 		});
 		alert2.show();
 	}
-	public void changePasswordAlert()
 	/*
-	 * Logs in a user
+	 * Prompts a user to enter a password and logs them in
+	 * 
+	 * @precondition Drink Server has been initialized
 	 */
+	public void changePasswordAlert()
 	{
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		alert.setTitle("Password");

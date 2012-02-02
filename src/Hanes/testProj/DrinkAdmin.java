@@ -12,7 +12,7 @@ public class DrinkAdmin {
 	{
 	}
 	/* DOES NOT WORK
-	 * DON't USEr
+	 * DON't USE
 	 * 
 	 * Takes a username and a credit amount and adds them to
 	 * the user's account

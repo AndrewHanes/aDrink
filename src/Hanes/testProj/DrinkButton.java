@@ -47,11 +47,11 @@ public class DrinkButton extends Button {
 			this.setTextColor(Color.RED);
 		}
 		this.setOnClickListener(new OnClickListener(){
-			public void onClick(View v)
 			/*
 			 * Starts a new thread when order is created so that the phone
 			 * doesn't lag as much
 			 */
+			public void onClick(View v)
 			{
 				setEnabled(false);
 				order();
@@ -59,31 +59,32 @@ public class DrinkButton extends Button {
 			}
 		});
 	}
-	public String getDrink()
 	/*
-	 * Returns the drink name
+	 * TODO: Starts a new thread when order is created so that the phone
+	 * doesn't hang
 	 */
+	public String getDrink()
 	{
 		return this.drink;
 	}
-	public int getPrice()
 	/*
-	 * Returns the drink price
+	 * @return The price of the drink
 	 */
+	public int getPrice()
 	{
 		return this.price;
 	}
-	public int getCount()
 	/*
-	 * Returns the number of this drink
+	 * @return The number of this type of drink in stock
 	 */
+	public int getCount()
 	{
 		return count;
 	}
-	public void order()
 	/*
 	 * This method handles dropping drinks
 	 */
+	public void order()
 	{
 		final AlertDialog.Builder alert2 = new AlertDialog.Builder(soopaContext);
 		alert2.setTitle("Drop");

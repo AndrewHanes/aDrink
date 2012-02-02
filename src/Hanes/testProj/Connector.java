@@ -14,15 +14,17 @@ public class Connector {
 	 * Class for connecting to the drink server
 	 * 
 	 * TODO Add SSL support when drink has SSL added to it.
-	 *		Just need to add the CSH cert to the trusted certificates
 	 */
 	BufferedReader br = null;
 	BufferedWriter bw = null;
 	Socket skt = null;
-	public Connector(String host, int port)
 	/*
 	 * Connects to a drink server
+	 * 
+	 * @param host The host being connected to 
+	 * @param port The port number
 	 */
+	public Connector(String host, int port)
 	{
 		try {
 			skt = new Socket(host,port);
@@ -30,7 +32,6 @@ public class Connector {
 			this.bw = new BufferedWriter(new OutputStreamWriter(skt.getOutputStream()));
 			Log.d("Connected",this.recieve().toString());
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			Log.d("UnknownHost","Cant Connect to "+host);
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -39,11 +40,11 @@ public class Connector {
 			e.printStackTrace();
 		}
 	}
-	public void reConnect()
 	/*
 	 * Reconnects to the host
 	 * Allows a user to log off
 	 */
+	public void reConnect()
 	{
 		InetAddress host = skt.getInetAddress();
 		int port = skt.getPort();
@@ -64,6 +65,9 @@ public class Connector {
 		}
 
 	}
+	/*
+	 * Closes the socket and reader/writer
+	 */
 	public void close()
 	{
 		try {
@@ -76,29 +80,29 @@ public class Connector {
 		}
 
 	}
-	public void send(String command)
 	/*
 	 * Sends a string to the drink server
+	 * 
+	 * @param command The command to be send (see sunday protocol)
 	 */
+	public void send(String command)
 	{
 		try {
 			bw.flush();
 			bw.write(command);
 			bw.flush();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		catch(NullPointerException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	public ArrayList<String> recieve()
 	/*
-	 * Returns a string sent from the drink server
+	 * @return The info sent from the drink server to the client
 	 */
+	public ArrayList<String> recieve()
 	{
 		ArrayList <String> temp = new ArrayList<String>();
 		try{
@@ -128,14 +132,15 @@ public class Connector {
 		Log.d("RECIEVE", temp.toString());
 		return temp;
 	}
-	public ArrayList<String> command(String s)
 	/*
-	 * Combines the recieve and send functions
-	 * Takes a string and returns the output from Drink
+	 * Combines the receive and send functions
+	 * @param command The command being sent to the server
+	 * @return The info sent back from the server
 	 */
+	public ArrayList<String> command(String command)
 	{
-		Log.d("COMMAND", s+'\n');
-		this.send(s+'\n');
+		Log.d("COMMAND", command+'\n');
+		this.send(command+'\n');
 		return this.recieve();		
 	}
 }

@@ -2,6 +2,15 @@ Drink App
 Andrew Hanes
 amh7738@rit.edu
 
+-------------------
+ABOUT THIS BRANCH
+
+I'm going to be adding a console to enable people to do things that are 
+not currently implemented in this app, such as sendcredits.
+
+Its basically going to just be a telnet client
+
+---------------------
 This app is intended to allow a user to order items from the vending
 machines at Computer Science House using their android phone.
 

@@ -1,6 +1,6 @@
 Drink App
 Andrew Hanes
-amh7738@rit.edu
+ahanes@csh.rit.edu
 
 This app is intended to allow a user to order items from the vending
 machines at Computer Science House using their android phone.

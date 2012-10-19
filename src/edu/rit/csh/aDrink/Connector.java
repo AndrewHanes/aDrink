@@ -1,4 +1,5 @@
-package Hanes.testProj;
+package edu.rit.csh.aDrink;
+
 /*
  * CSH Drink App by Andrew Hanes
  */
@@ -14,7 +15,8 @@ import java.util.ArrayList;
 
 import android.util.Log;
 
-public class Connector {
+public class Connector
+{
 	/*
 	 * Class for connecting to the drink server
 	 * 

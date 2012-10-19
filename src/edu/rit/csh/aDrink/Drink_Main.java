@@ -1,9 +1,11 @@
-package Hanes.testProj;
+package edu.rit.csh.aDrink;
+
 /*
  * CSH Drink App by Andrew Hanes
  */
 
 import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;

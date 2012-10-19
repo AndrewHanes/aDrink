@@ -1,4 +1,4 @@
-package Hanes.testProj;
+package edu.rit.csh.aDrink;
 
 /*
  * CSH Drink App by Andrew Hanes

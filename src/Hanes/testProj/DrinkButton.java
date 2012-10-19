@@ -9,26 +9,27 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
-public class DrinkButton extends Button {
+public class DrinkButton extends Button
+{
 	/*
 	 * drinkButton supports all of the Button methods, but is automatically set up
 	 * to provide the needed information
 	 */
-	String drink; //drink name
-	int price; //drink price
-	int count; //the number of this drink available
+	String drink; // drink name
+	int price; // drink price
+	int count; // the number of this drink available
 	int slot;
 	Connector drinkServ;
 	Context soopaContext;
 	Drink_Main drinkMain;
-	public DrinkButton(Context context, String drink, int price, int count, int slot, Connector drinkServ, Drink_Main drinkMain)
+
+	public DrinkButton (Context context, String drink, int price, int count,
+			int slot, Connector drinkServ, Drink_Main drinkMain)
 	{
-		super(context); 
+		super(context);
 		this.soopaContext = context;
 		this.drink = drink;
 		this.price = price;
@@ -36,22 +37,25 @@ public class DrinkButton extends Button {
 		this.count = count;
 		this.slot = slot;
 		this.drinkServ = drinkServ;
-		if( this.count > 0 )
+		if(this.count > 0)
 		{
-			this.setText(this.drink.substring(1,this.drink.length()-1)+" | " + this.price+" Credits | "+ this.count+ " left");
-		}
-		else
+			this.setText(this.drink.substring(1, this.drink.length() - 1)
+					+ " | " + this.price + " Credits | " + this.count + " left");
+		} else
 		{
 			this.setEnabled(false);
-			this.setText("OUT OF STOCK - "+this.drink.substring(1,this.drink.length()-1)+" | " + this.price+" Credits");
+			this.setText("OUT OF STOCK - "
+					+ this.drink.substring(1, this.drink.length() - 1) + " | "
+					+ this.price + " Credits");
 			this.setTextColor(Color.RED);
 		}
-		this.setOnClickListener(new OnClickListener(){
+		this.setOnClickListener(new OnClickListener()
+		{
 			/*
 			 * Starts a new thread when order is created so that the phone
 			 * doesn't lag as much
 			 */
-			public void onClick(View v)
+			public void onClick (View v)
 			{
 				setEnabled(false);
 				order();
@@ -59,78 +63,97 @@ public class DrinkButton extends Button {
 			}
 		});
 	}
+
+	/*
+	 * @return The number of this type of drink in stock
+	 */
+	public int getCount ()
+	{
+		return count;
+	}
+
 	/*
 	 * TODO: Starts a new thread when order is created so that the phone
 	 * doesn't hang
 	 */
-	public String getDrink()
+	public String getDrink ()
 	{
 		return this.drink;
 	}
+
 	/*
 	 * @return The price of the drink
 	 */
-	public int getPrice()
+	public int getPrice ()
 	{
 		return this.price;
 	}
-	/*
-	 * @return The number of this type of drink in stock
-	 */
-	public int getCount()
-	{
-		return count;
-	}
+
 	/*
 	 * This method handles dropping drinks
 	 */
-	public void order()
+	public void order ()
 	{
 		final AlertDialog.Builder alert2 = new AlertDialog.Builder(soopaContext);
 		alert2.setTitle("Drop");
-		alert2.setMessage("Confirm drop of "+this.drink +"\nPrice = "+this.price);
-		alert2.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				final AlertDialog.Builder alert3 = new AlertDialog.Builder(soopaContext);
+		alert2.setMessage("Confirm drop of " + this.drink + "\nPrice = "
+				+ this.price);
+		alert2.setPositiveButton("Ok", new DialogInterface.OnClickListener()
+		{
+			public void onClick (DialogInterface dialog, int whichButton)
+			{
+				final AlertDialog.Builder alert3 = new AlertDialog.Builder(
+						soopaContext);
 				alert3.setTitle("Drop");
 				alert3.setMessage("Dropping...");
-				alert2.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
-
-						ArrayList<String> back = drinkServ.command("DROP "+slot+" "+drinkMain.sp.getInt("delay", 0));	
-						if (back.get(0).indexOf("ERR") > -1)
+				alert2.setPositiveButton("Ok",
+						new DialogInterface.OnClickListener()
 						{
-							
-						}
-						else
-						{
-							drinkMain.displayAlert("Successful Drop");	
-							drinkMain.updateButtons();
+							public void onClick (DialogInterface dialog,
+									int whichButton)
+							{
 
-						}
+								ArrayList<String> back = drinkServ
+										.command("DROP "
+												+ slot
+												+ " "
+												+ drinkMain.sp.getInt("delay",
+														0));
+								if(back.get(0).indexOf("ERR") > -1)
+								{
 
-					}
-				});
-				ArrayList<String> back = drinkServ.command("DROP "+slot+" "+drinkMain.sp.getInt("delay", 0));	
-				if (back.get(0).indexOf("ERR") > -1)
+								} else
+								{
+									drinkMain.displayAlert("Successful Drop");
+									drinkMain.updateButtons();
+
+								}
+
+							}
+						});
+				ArrayList<String> back = drinkServ.command("DROP " + slot + " "
+						+ drinkMain.sp.getInt("delay", 0));
+				if(back.get(0).indexOf("ERR") > -1)
 				{
 					String s = back.get(0);
 					drinkMain.displayAlert(s);
-				}
-				else
+				} else
 				{
-					drinkMain.displayAlert("Successful Drop");	
+					drinkMain.displayAlert("Successful Drop");
 					drinkMain.updateButtons();
 
 				}
 
 			}
 		});
-		alert2.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
+		alert2.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener()
+				{
+					public void onClick (DialogInterface dialog, int whichButton)
+					{
 
-			}
-		});
+					}
+				});
 		alert2.show();
 
 	}

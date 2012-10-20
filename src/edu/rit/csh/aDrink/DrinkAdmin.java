@@ -1,4 +1,4 @@
-package Hanes.testProj;
+package edu.rit.csh.aDrink;
 
 import java.util.ArrayList;
 
